@@ -13,7 +13,7 @@
 * If you prepare an external program to generate the I / Q signal in real time,you can also add the program and/or script in the menu. 
 * You can set or chose GPS spoofing scenario by predefined location and/or date & time.
 
-![PICT](http://git.lab.local/adviser/Wireless_Attack_Launch_Box/raw/master/WALB.png)
+![PICT](https://github.com/crecentmoon/WALB/blob/master/WALB.png)
 
 ## Prerequisites. 
 You need to install GPS-SDR-SIM,HackRF host tools, and WireringPi on RaspberryPi.<br>
