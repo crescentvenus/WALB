@@ -1,15 +1,17 @@
 # WALB ( Wireless Attack Launch Box ) 
 ## What is WALB ?
-* WALB is a Raspberry Pi2/Pi3 based portable GPS signal generator.
-* It uses HackRF as a SDR unit with enhanced GPS-SDR-SIM.
-* It has a 8x2 LCD and rotally encorder with two color LED for opration of WALB.
-* You can set or chose GPS spoofing senario by predefeined location and/or date&time.
+* WALB is a Raspberry Pi2/Pi3 and HackRF based lanch box sized portable RF signal generator.
+* The intended purpose of the WALB development is to test or demonstrate the security issue of wireless devices. 
+* By preparing a I/Q binary data, it is possible to generate any signal in the frequency range available to HackRF.
+* For GPS and ADS-B, real time signal generator module is included in WALB.
+* It uses HackRF as a SDR unit with enhanced GPS-SDR-SIM for GPS signal generation.
+* It has a 8x2 LCD and a rotary encoder with two color LED and a push switch for the operation of WALB.
 * Since WALB works with battery powered, you can use it any where you like.
-
-## 特徴
-* 8bit signedのバイナリーI/Q信号ファイルを準備すれば、メニュー項目（テキスト）の編集・追加で周波数、サンプルレートを任意に設定した信号の発生が可能
-* リアルタイムでI/Q信号を発生する外部プログラムを準備すれば、メニュー項目と実行スクリプトの編集・追加で任意の信号の発生が可能
-* GPSとADS-B信号については、リアルタイムで信号を生成するモジュールを内蔵
+* Adding new simulation scenario or signal generation, it can be achieved by SSH login and simply edit the menu items using your favorite text editor. 
+* By preparing the binary I / Q signal file of 8 bit signed, you can generate arbitrary RF signals.
+* To do so, you simply need to edit and add TEXT menu items specifying the filename of I/Q file, frequency, and sample rate.
+* If you prepare an external program to generate the I / Q signal in real time,you can also add the program and/or script in the menu. 
+* You can set or chose GPS spoofing scenario by predefined location and/or date & time.
 
 ![PICT](http://git.lab.local/adviser/Wireless_Attack_Launch_Box/raw/master/WALB.png)
 
@@ -29,18 +31,20 @@ http://wiringpi.com/download-and-install/
 ## directory structure of WALB software:<br>
 ```
 /home/pi/
-        /IQ-files    ... files to spoof GPS location;NMAE, CSV, or Fix Lat/Lon 
+        /IQ-files    ... binary I/Q files to pass hackRF or text files used for genaration of I/Q file by 
+                         dedicated real time signal generation program such as enhanced GPS-SDR-SIM, or ADS-B_gen
         /gps-sdr-sim ... GPS-SDR-SIM files.
         replay2      ... Main startup program of the WALB
         menu2.txt    ... Main menu items displayed on LCD
         level2.txt   ... Sub menu-1: transmit power setteing
         date2.txt    ... Sub menu-2: date&time setting for GPS time spoofing
-        sim_start.sh ... Script to start I/Q signal generation and kick HackRF to transmit
-        ic2-disp.sh  ...
-        stat.sh      ...
-        kill_proc.sh
-        eth.sh
-        wlan.sh
+        scripts/
+                sim_start.sh ... Script to start I/Q signal generation and kick HackRF to transmit
+                ic2-disp.sh  ... Script to control LCD
+                stat.sh      ... Script to check if hackrf_transfer is active
+                kill_proc.sh ... Script to kill gps-sdr-sim and/or hackrf_transfer
+                eth.sh       ... Script to display eth0 IP address on LCD
+                wlan.sh      ... Script to display wlan0 IP address on LCD
 ```    
 ## Installation
 # compile
@@ -59,3 +63,6 @@ https://www.youtube.com/watch?v=mEU5RjRJ2lI<br>
 <br>
 * GSP spoofing detection by android Tablet. (Length: 90 seconds)<br>
 https://youtu.be/Hfqm7aartGw<br>
+
+* ADS-B replay attack demo.( Length: 2 minites)<br>
+https://www.youtube.com/watch?v=APc1hreOkYU<br>
