@@ -1,6 +1,6 @@
 # WALB ( Wireless Attack Launch Box ) 
 ## What is WALB ?
-* WALB is a Raspberry Pi2/Pi3 and HackRF based lanch box sized portable RF signal generator.
+* WALB is a Raspberry Pi2/Pi3 and HackRF based lunch box sized portable RF signal generator.
 * The intended purpose of the WALB development is to test or demonstrate the security issue of wireless devices. 
 * By preparing a I/Q binary data, it is possible to generate any signal in the frequency range available to HackRF.
 * For GPS and ADS-B, real time signal generator module is included in WALB.
