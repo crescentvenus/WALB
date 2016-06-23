@@ -45,6 +45,7 @@ http://wiringpi.com/download-and-install/
                 kill_proc.sh ... Script to kill gps-sdr-sim and/or hackrf_transfer
                 eth.sh       ... Script to display eth0 IP address on LCD
                 wlan.sh      ... Script to display wlan0 IP address on LCD
+		python/		... Python port files from replay2.c
 ```    
 ## Installation
 # compile
@@ -61,8 +62,5 @@ https://www.youtube.com/watch?v=-V4KLIqEzQg<br>
 * GPS time spoofing demo intended to test GPS week number rollover issue. (Length: 140 seconds)<br>
 https://www.youtube.com/watch?v=mEU5RjRJ2lI<br>
 <br>
-* GSP spoofing detection by android Tablet. (Length: 90 seconds)<br>
-https://youtu.be/Hfqm7aartGw<br>
-
 * ADS-B replay attack demo.( Length: 2 minites)<br>
 https://www.youtube.com/watch?v=APc1hreOkYU<br>
