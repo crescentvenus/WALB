@@ -6,6 +6,7 @@ POWER=$2
 FREQ=$3
 SAMPLE=$4
 DATE=$5
+N_SAT=8
 
 PID=`ps ax | grep hackrf_transfer | grep -v grep | awk '{print $1}'`
 if  test -z $PID  ; then
@@ -27,13 +28,13 @@ LINES=`wc $FILE -l | /usr/bin/awk '{print $1}'`
 if [ $LINES = 1 ]; then
 LOCATION=`cat $FILE`
 echo "Fix Location"
-$DIR/gps-sdr-sim -e $DIR/brdc3640.15n -l $LOCATION -b8 -o $DIR/fifo $DATE&
+$DIR/gps-sdr-sim -e $DIR/brdc3640.15n -l $LOCATION -b8 -n $N_SAT -o $DIR/fifo $DATE&
 elif [ `echo $FILE | grep csv` ]; then
 echo "csv"
-cat $FILE | $DIR/gps-sdr-sim -e $DIR/brdc3640.15n -u- -b8 -o $DIR/fifo $DATE&
+cat $FILE | $DIR/gps-sdr-sim -e $DIR/brdc3640.15n -u- -b8 -n $N_SAT -o $DIR/fifo $DATE&
 elif [ ` echo $FILE | grep txt` ]; then
 echo "NMEA"
-cat $FILE | $DIR/gps-sdr-sim -e $DIR/brdc3640.15n -g- -b8 -o $DIR/fifo $DATE&
+cat $FILE | $DIR/gps-sdr-sim -e $DIR/brdc3640.15n -g- -b8 -n $N_SAT -o $DIR/fifo $DATE&
 fi
 
 /usr/l

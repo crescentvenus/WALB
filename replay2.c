@@ -41,10 +41,13 @@ char *p;
 char s[MAX_CHAR];
 /* M for menu, L for Level, D for Date&Time, P for Position */
 int Mmax,Lmax,Dmax,Pmax;  // max number of lines on power level setting
-char *Mname = "/home/pi/menu2.txt";
-char *Lname = "/home/pi/level2.txt";
-char *Dname = "/home/pi/date2.txt";
+char *scripts = "scripts/";
+char *home  = "/home/pi/";
+char *Mname = "menu2.txt";
+char *Lname = "level2.txt";
+char *Dname = "date2.txt";
 
+char path[50];
 char Mbuf[MAX_LINE][MAX_CHAR];
 char Lbuf[MAX_LINE][MAX_CHAR];
 char Dbuf[MAX_LINE][MAX_CHAR];
@@ -95,22 +98,25 @@ void proc(int count){
         file_name=strtok(NULL,",");
         freq=strtok(NULL,",");
         s_rate=strtok(NULL,",");
-             strcpy(str,cmd);
-             strcat(str, menu_name);
-             system(str);                   // Display 1st line on LCD
+		strcpy(str,path);
+        strcat(str,cmd);
+        strcat(str, menu_name);
+        system(str);                   // Display 1st line on LCD
         if(atoi(s_rate)!=0 || num==0){      // Power
-          strcpy(str,cmd2);                 // Display 2nd line on LCD
-          strcat(str,Lbuf[num2]);
-          system(str);
-
-          strcpy(str,cmd3);
-          strcat(str,Dbuf[num3]);
-          system(str);
+			strcpy(str,path);
+          	strcat(str,cmd2);                 // Display 2nd line on LCD
+          	strcat(str,Lbuf[num2]);
+          	system(str);
+			strcpy(str,path);
+          	strcat(str,cmd3);
+          	strcat(str,Dbuf[num3]);
+          	system(str);
         }
         if( num==1 ){
-          strcpy(str,cmd2);                 // Display 2nd line on LCD
-          strcat(str,Dbuf[num3]);           // Date&Time
-          system(str);
+			strcpy(str,path);
+          	strcat(str,cmd2);                 // Display 2nd line on LCD
+          	strcat(str,Dbuf[num3]);           // Date&Time
+          	system(str);
         }
         break;
       case 1:    // Sub menu --- Level set
@@ -143,15 +149,14 @@ void click_a(void){
     int _a;
     if (int_a ==0 ){
   int_a=1;
-        _a = digitalRead(rA);//GPIOの値を取得。
-        if(_a != a){ //同じ値が連続した場合にスキップする。
-                if(a == 1){ //一つ前のA端子の値を格。
+        _a = digitalRead(rA);
+        if(_a != a){
+                if(a == 1){
                         p_a = 1;
                 }else{
                         p_a = 0;
                 }
                 a = _a;
-                //a端子とb端子の直前の値が1であり、今の値が0である場合にTRUE。
                 if(a == 0 && b == 0 && p_a == 1 && p_b == 1){
       proc(1);
                 }
@@ -192,10 +197,13 @@ void flashLED(int color, int counts){
 int read_file(char *file, char buf[][MAX_CHAR]){
   FILE *fp;
   char tmp[MAX_CHAR];
+  char str[100];
   int n,pos;
-  fp = fopen(file, "r" );
+  strcpy(str,home);
+  strcat(str,file);
+  fp = fopen(str, "r" );
   if( fp == NULL ){
-        printf( "%sファイルが開けません\n", file );
+        printf( "%sFile open failed.\n", file );
       return -1;
   }
   n=0;
@@ -240,12 +248,14 @@ int main(void){
   int pos = NOT_FOUND;
   unsigned int maxMillis=1000;
   int tx=0;
-        a=1;
-        b=1;
-        p_a=0;
-        p_b=0;
-        num=0;num2=0;
-    setup = wiringPiSetup();
+  a=1;
+  b=1;
+  p_a=0;
+  p_b=0;
+  num=0;num2=0;
+  strcpy(path,home);
+  strcat(path,scripts);
+  setup = wiringPiSetup();
   pinMode(rRED,OUTPUT);
   pinMode(rGREEN,OUTPUT);
   pinMode(rSW,INPUT);
@@ -280,12 +290,12 @@ int main(void){
   flashLED(rRED,2);
   flashLED(rGREEN,2);
 
-    pullUpDnControl(rSW, PUD_UP);
-    pullUpDnControl(rA, PUD_UP);
-    pullUpDnControl(rB, PUD_UP);
-    wiringPiISR(rA, INT_EDGE_BOTH, click_a);
-    wiringPiISR(rB, INT_EDGE_BOTH, click_b);
-    while(setup != -1){
+  pullUpDnControl(rSW, PUD_UP);
+  pullUpDnControl(rA, PUD_UP);
+  pullUpDnControl(rB, PUD_UP);
+  wiringPiISR(rA, INT_EDGE_BOTH, click_a);
+  wiringPiISR(rB, INT_EDGE_BOTH, click_b);
+  while(setup != -1){
         usleep(10000);
     if(digitalRead(rSW)==0) {    // Push SW pressed
 //    printf("[%s %s %s %s %s]\n",menu_name,file_name,freq,s_rate,date_time);
@@ -324,10 +334,11 @@ int main(void){
             str[i]=0x00;
           }
           if(atoi(s_rate) !=0){        // sample
+			strcpy(str,path);
             if(strpos(file_name,".txt")>0 || strpos(file_name,".csv")>0){
-              strcpy(str,"/home/pi/sim_start.sh ");// generate rela-time I/Q data
+              strcat(str,"sim_start.sh ");// generate rela-time I/Q data
             } else {
-              strcpy(str,"/home/pi/transmit2.sh ");  // Use pre-generated I/Q data
+              strcat(str,"transmit2.sh ");  // Use pre-generated I/Q data
 //              Trim(str);
 //              strcat(str,file_name);          // Replay file name
             }
