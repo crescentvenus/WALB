@@ -4,11 +4,13 @@
 Tx-POWER,0,0,0
 DateTime,0,0,0
 CN_fix,CN1.txt,1575420000,2600000
-Mandalay,Mandalay_Bay.txt,1575420000,2600000
+Mandal-1,Mandalay_Bay.txt,1575420000,2600000
+Mandal-B,Mandal-B.bin,1575420000,2600000
 Paris,paris.txt,1575420000,2600000
-MOD,ichigaya.txt,1575420000,2600000
-satellit,satellite.csv,1575420000,2600000
-eth,/home/pi/eth.sh,0,0
-wlan,/home/pi/wlan.sh,0,0
+Paris-B,Paris.bin,1575420000,2600000
+Tokyo,ichigaya.txt,1575420000,2600000
+ADS-B,/home/pi/scripts/ads-b.sh,0,0
 reboot,reboot,0,0
 shutdown,shutdown -h now,0,0
+eth,/home/pi/eth.sh,0,0
+wlan,/home/pi/wlan.sh,0,0
