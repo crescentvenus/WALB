@@ -1,75 +1,113 @@
 #!/usr/bin/php
 <?php
-function update($msg,$fp){
-//	echo $msg."\n";
-	$fp_o=fopen("/tmp/fifo2","w");
-	fputs($fp_o,$msg."\n");
-	fclose($fp_o);
+require("LatLon.ini.php");
+$current_pos=$LatLon;
+//$pointed_location="/var/www/html/pokePos/LatLon.txt";
+echo $pointed_location."\n";
+echo $current_pos."\n";
+$MAX_PTR=12000;                 //
+$MAX_G=1*9.80665;               // 1 G
+$R_earth=6378.1*1000;   // radius of the earth:6378Km
+$Vdeg=1.2*360/(2*3.141592*$R_earth);
+$dt=0.1;                // 1/10
+$SLEEP=100000;  // 100mS
+
+function update($msg,$current_pos){
+//      echo $msg."\n";
+        $fp_o=fopen($current_pos,"w");
+        fputs($fp_o,$msg."\n");
+        fclose($fp_o);
 }
-$MAX=200;
-$SLEEP=100000;
-$prev=0;
-$Gmax=1;
-$g=9.8;
-$Max_step=$Gmax*$g*360/(2*3.141*6371*1000);	// m/step speed of movement
-$VmaxS=300*1000/3600;				// 300Km/Hour Max speed
-$Tmax=$VmaxS/$g;				// Sec  Time to reach MaxSpeed;
 
-$fp=fopen("/tmp/tmp.txt","w");
-fputs("36.112951,-115.175643,100.0\n");
-fclose($fp);
-system("chmod 666 /tmp/tmp.txt");
+$fp_r=fopen($pointed_location,"r");
+$dat=trim(fgets($fp_r));
+fclose($fp_r);
+$t=explode(",",$dat);   // Lat,Lon,ALt,Zoom,Max_speed
+$x0=$t[0];$y0=$t[1];$z0=$t[2];
+update($dat,$current_pos);
+$prev=$dat;
+$max_v=$t[4];
+$max_deg_tic=$dt*$Vdeg*$max_v*1000/3600;
+$offset = $max_deg_tic * 0.5;
+
 while (1){
-	$fp_r=fopen("/tmp/tmp.txt","r");
-	$dat=trim(fgets($fp_r));
-	fclose($fp_r);
-	if($prev == 0){
-		update($dat,$fp);
-		$prev=$dat;
-		$t=explode(",",$dat);
-		$x0=$t[0];$y0=$t[1];$z0=$t[2];
-		$ptr=$MAX;
-	} else {
-		if($dat<>$prev) {
-			printf("$dat.\n");
-			$t=explode(",",$dat);
-			$x=$t[0];$y=$t[1];$z=$t[2];
-			$dx=($x0-$x)/$Max_step;	// number of steps to move the path
-			$nx=$x0;$sx=gmp_sign($dx);
-			$Tx1=$Tmax;$Tx2=
-			$dy=($y0-$y)/$Max_step;$ny=$y0;$sy=gmp_sign($dy);
-			$dz=($z0-$z)/$Max_step;
-			if(abs($dx)>$abs($dy)){
-				if(abs($dx))>2*$Tmax){	// reach max speed /---\
-					$T=0;
-					$V=0;
-					while(1){
-						if($T>$Tmax
-						$nx+=$sx*$Max_step;
-						$ny+=$sy*$Max_step;
-				} else {	//not reach to max speed
-
-				}
-			} 
-			for($i=0;$i<$MAX;$i++){
-				$nx=round($x0-$dx*($i+1),6);
-				$ny=round($y0-$dy*($i+1),6);
-				$nz=round($z0-$dz*($i+1),0);
-				$buf[$i]=$nx.",".$ny.",".$nz;
-//				printf ("$nx,$ny,$nz\n");
-			}
-			$ptr=0;$prev=$dat;
-			$x0=$x; $y0=$y; $z0=$z;
-			update($buf[$ptr++],$fp);
-		} else {
-			if($ptr<$MAX){
-				update($buf[$ptr],$fp);
-				$ptr++;
-			}
-		}
-	}
-	usleep($SLEEP);
+        $fp_r=fopen($pointed_location,"r");
+        $dat=trim(fgets($fp_r));
+        fclose($fp_r);
+        $t=explode(",",$dat);   // Lat,Lon,ALt,Zoom,Max_speed
+        $max_v=$t[4];
+        $max_deg_tic=$dt*$Vdeg*$max_v*1000/3600;
+        if($dat<>$prev) {               // New pointed Lat/Lon...speed
+                echo "$dat,$prev\n";
+                if(isset($buf)) {
+                        $tmp=explode(",",$buf[$ptr]);
+                        $x0=$tmp[0];$y0=$tmp[1];
+                }
+                $s=explode(",",$dat);
+                $x=$s[0];$y=$s[1];$z=$s[2];
+                $max_v=trim($t[4]);
+                $max_deg_tic=$dt*$Vdeg*$max_v*1000/3600;
+                $offset = $max_deg_tic * 0.5;
+//              printf("$dat, MaxV:$max_v,Max_dev_tic:$max_deg_tic\n");
+                $dx=($x0-$x);           // dintance to next position [deg]
+                $dy=($y0-$y);
+                $dx_s=($dx>0)?1:-1;
+                $dy_s=($dy>0)?1:-1;
+                $v0=0;$v=0;$tic=0;$nx=$x0;$ny=$y0;$i=0;
+                $t=$dt;                         // update every 1/10 sec.
+                if(abs($dx)>abs($dy)){
+                        if($dx!=0){
+                        $sc=abs($dy/$dx);
+                                while(abs($x-$nx)>$offset){
+                                        $v=($v>=$max_deg_tic)?$max_deg_tic:$v0+$MAX_G*$t*$Vdeg;
+                                        $v0=$v;
+                                        $dxl=$v*$t*$dx_s;
+                                        $dyl=$v*$t*$dy_s;
+                                        $nx=$nx-$dxl;
+                                        $ny=$ny-$dyl*$sc;
+                                        if(abs($y-$ny)<$offset) $ny=$y;
+                                        $buf[$i]=$nx.",".$ny.",100";
+                                        $i++;
+                                        if($i>$MAX_PTR) break;
+                                }
+                        }
+                } else {
+                        if($dy!=0){
+                                $sc=abs($dx/$dy);
+                                while(abs($y-$ny)>$offset){
+                                        $v=($v>=$max_deg_tic)?$max_deg_tic:$v0+$MAX_G*$t*$Vdeg;
+                                        $v0=$v;
+                        $dxl=$v*$t*$dx_s;
+                        $dyl=$v*$t*$dy_s;
+                        $nx=$nx-$dxl*$sc;
+                                $ny=$ny-$dyl;
+                                        if(abs($x-$nx)<$offset) $nx=$x;
+                                        $buf[$i]=$nx.",".$ny.",100";
+                                        $i++;
+                                        if($i>$MAX_PTR) break;
+                                }
+                        }
+                }
+                echo "Number of points:$i\n";
+                if($i>$MAX_PTR){            // Change location without interpolation when distance is too far away.
+                        unset($buf);
+                        $prev=$dat;
+                        update($dat,$current_pos);
+                } else {
+                        $buf[$i++]=$dat;
+                        $ptr_max=$i;
+                        $ptr=0;$prev=$dat;
+                        $x0=$x; $y0=$y; $z0=$z;
+                        if (isset($buf)) update($buf[$ptr++],$current_pos);
+                }
+        } else {        // No current location changed
+                if(isset($buf) && ($ptr<$ptr_max)){
+                        update($buf[$ptr],$current_pos);
+                        $ptr++;
+                } else {
+                        unset($buf);
+                }
+        }
+        usleep($SLEEP);
 }
 ?>
-		
-
