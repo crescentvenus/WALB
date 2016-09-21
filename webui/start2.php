@@ -1,30 +1,29 @@
 #!/usr/bin/php
 <?php
-$PH="/home/mars/WALB/IQ-files";
-$DIR="/home/mars/WALB/GPS-SDR-SIM_E";
-$FILE="/tmp/fifo2";
+include("LatLon.ini.php");
+$FILE=$LatLon;
+//$FIFO="/tmp/fifo";
+$DIR="/home/pi/gps-sdr-sim";
 $POWER=0;
 $FREQ=1575420000;
-$SAMPLE=2600000;
-$DATE=`LANG=C; date -u --date "18 sec" +%Y/%m/%d,%X`;
-$DATE=trim($DATE);
-$BRDC="brdc2370.16n";
-$N_SAT=16;
-$FIFO="/tmp/fifo";
+$SAMPLE=1100000;
+$BRDC="brdc3640.15n"
+
+$N_SAT=8;
+$CWD=getcwd();
 if($argv[1] =="stop"){
-	exec("./kill_proc.sh &");
+        exec("$CWD/kill_proc.sh &");
 }
 if($argv[1] =="start"){
-	echo "Sim starting.....<BR>\n";
-	exec("./kill_proc.sh");
-	echo "Sim kill_proc.....<BR>\n";
-	$cmd2="$DIR/gps-sdr-sim -s $SAMPLE -e $DIR/$BRDC -i $FILE -b8 -n $N_SAT -o $FIFO -T $DATE >/dev/null &";
-	echo "$cmd2\n";
-	exec($cmd2);
-	echo "Sim sps-sdr-sim.....<BR>\n";
-	$cmd1="/usr/local/bin/hackrf_transfer -t /tmp/fifo -f 1575420000 -s 2600000 -x 0 >/dev/null &";
-	echo "$cmd1\n";
-	exec($cmd1);
-	echo "Sim hackrf....<BR>\n";
+        exec("$CWD/kill_proc.sh");
+        sleep(1);
+        $DATE=`LANG=C; date -u --date "18 sec" +%Y/%m/%d,%X`;
+        $DATE=trim($DATE);
+        $cmd2="$DIR/gps-sdr-sim -s $SAMPLE -e $DIR/$BRDC -L $FILE -b8 -n $N_SAT -o $FIFO -T $DATE >/dev/null &";
+        exec($cmd2);
+        sleep(1);
+        exec("$CWD/smooth2.php >/dev/null &");
+        $cmd1="/usr/local/bin/hackrf_transfer -t $FIFO -f $FREQ -s $SAMPLE -x 0 >/dev/null &";
+        exec($cmd1);
 }
 ?>
