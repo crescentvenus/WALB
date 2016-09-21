@@ -46,6 +46,8 @@ http://wiringpi.com/download-and-install/
                 eth.sh       ... Script to display eth0 IP address on LCD
                 wlan.sh      ... Script to display wlan0 IP address on LCD
 		python/		... Python port files from replay2.c
+
+/var/www/html/pokePos/    ... files to set GPS-SDR-SIM location via Web UI. 
 ```    
 ## Installation
 # compile
