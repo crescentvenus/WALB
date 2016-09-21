@@ -1,0 +1,39 @@
+* {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+body{
+    overflow: hidden;
+}
+.fluid{
+    width: 100%;
+    paddin: 0;
+    margin: 0;
+}
+.align-left{
+    text-align: left;
+}
+.align-right{
+    text-align: right;
+}
+.inline-group{
+    float: left;
+}
+.container{
+    padding: 20px;
+}
+.form-control{
+    font-size: 12px;
+    padding:2px 4px;
+    margin: 2px;
+}
+.form-button{
+    width: 60px;
+}
+.text-red{
+    color: #ee0000 !important;
+}
+.text-bold{
+    font-weight: bold !important;;
+}
