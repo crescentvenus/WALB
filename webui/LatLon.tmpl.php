@@ -41,7 +41,7 @@
                     </div>
                 </td><td class="form-array">
                     <div class="form-group form-inline">
-                    <form id="SIM" method="POST" action="LatLon2.php">
+                    <form id="SIM" method="POST" action="LatLon.php">
                                         <input id="start" type="submit" value="SimStart" name="start">
                                         <input id="stop" type="submit" value="SimStop" name="stop">
                         </form>
