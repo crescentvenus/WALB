@@ -21,7 +21,7 @@ function _file_put_contents($fname, $data) {
 }
 
 $max_retry = 5;
-$title = "gps spoof";
+$title = "gps location setting";
 $fp=fopen($location_file,"r");
 $in=fgets($fp);
 fclose($fp);
@@ -83,4 +83,4 @@ if(isset($_POST['latitude']) && isset($_POST['longitude'])){
 }
 
 $template = new Template();
-$template->show("LatLon.tmpl2.php", compact('title','settings'));
+$template->show("LatLon.tmpl.php", compact('title','settings'));
