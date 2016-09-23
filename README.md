@@ -32,7 +32,7 @@ http://wiringpi.com/download-and-install/
 <br><br>
 Additional info to control hackrf via HTTP server.<br>
 * You have to set udev rules.<br>
-(1)Add  /etc/udev/rules.d/52-hackrf.rules as follows.
+(1)Add  /etc/udev/rules.d/52-hackrf.rules as follows.<br>
 	ATTR{idVendor}=="1d50", ATTR{idProduct}=="604b", SYMLINK+="hackrf-jawbreaker-%k", MODE="660", GROUP="plugdev"<br>
 	ATTR{idVendor}=="1d50", ATTR{idProduct}=="6089", SYMLINK+="hackrf-one-%k", MODE="660", GROUP="plugdev"<br>
 	ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", SYMLINK+="hackrf-dfu-%k", MODE="660", GROUP="plugdev"<br>
