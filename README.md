@@ -33,15 +33,15 @@ http://wiringpi.com/download-and-install/
 Additional info to control hackrf via HTTP server.<br>
 * You have to set udev rules.<br>
 ```
-(1)Add  /etc/udev/rules.d/52-hackrf.rules as follows.<br>
-	ATTR{idVendor}=="1d50", ATTR{idProduct}=="604b", SYMLINK+="hackrf-jawbreaker-%k", MODE="660", GROUP="plugdev"<br>
-	ATTR{idVendor}=="1d50", ATTR{idProduct}=="6089", SYMLINK+="hackrf-one-%k", MODE="660", GROUP="plugdev"<br>
-	ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", SYMLINK+="hackrf-dfu-%k", MODE="660", GROUP="plugdev"<br>
-(2) Refrect udev rules.<br>
-	$sudo udevadm control --reload-rules<br>
-(3) Add www-data user into plugdev.<br>
-	$sudo usermod -aG plugdev www-data<br>
-(4) Restart Apache2<br><br>
+(1)Add  /etc/udev/rules.d/52-hackrf.rules as follows.
+	ATTR{idVendor}=="1d50", ATTR{idProduct}=="604b", SYMLINK+="hackrf-jawbreaker-%k", MODE="660", GROUP="plugdev"
+	ATTR{idVendor}=="1d50", ATTR{idProduct}=="6089", SYMLINK+="hackrf-one-%k", MODE="660", GROUP="plugdev"
+	ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", SYMLINK+="hackrf-dfu-%k", MODE="660", GROUP="plugdev"
+(2) Refrect udev rules.
+	$sudo udevadm control --reload-rules
+(3) Add www-data user into plugdev.
+	$sudo usermod -aG plugdev www-data
+(4) Restart Apache2<br>
 ```
 
 ## directory structure of WALB software:<br>
