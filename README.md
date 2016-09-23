@@ -18,6 +18,7 @@
 ## Prerequisites. 
 You need to install GPS-SDR-SIM,HackRF host tools, and WireringPi on RaspberryPi.<br>
 Rapsberry Pi3 is highly recomended for better performance of the real time signal generation.<br>
+It requires apache2 and php5 if you wish to use web based UI.<br>
 The installation instruction links are as follows.<br> 
 RaspberryPi:
 https://www.raspberrypi.org/<br>
@@ -33,7 +34,7 @@ http://wiringpi.com/download-and-install/
 /home/pi/
         /IQ-files    ... binary I/Q files to pass hackRF or text files used for genaration of I/Q file by 
                          dedicated real time signal generation program such as enhanced GPS-SDR-SIM, or ADS-B_gen
-        /gps-sdr-sim ... GPS-SDR-SIM files.
+        /bin/gps-sdr-sim ... enhanced GPS-SDR-SIM binary file and  ephemeris file(s).
         replay2      ... Main startup program of the WALB
         menu2.txt    ... Main menu items displayed on LCD
         level2.txt   ... Sub menu-1: transmit power setteing
@@ -45,9 +46,16 @@ http://wiringpi.com/download-and-install/
                 kill_proc.sh ... Script to kill gps-sdr-sim and/or hackrf_transfer
                 eth.sh       ... Script to display eth0 IP address on LCD
                 wlan.sh      ... Script to display wlan0 IP address on LCD
-		python/		... Python port files from replay2.c
+	python/		　　 ... Python port file from replay2.c
 
-/var/www/html/pokePos/    ... files to set GPS-SDR-SIM location via Web UI. 
+/var/www/html/webui/    ... Sctipt files to set GPS-SDR-SIM location via Web UI. 
+	LatLon.php	... Web UI
+	LatLon.ini.php	...  
+	LatLon.tmpl.php	... Template file.
+	LatLon.js	... 
+	start2.php	... Start/Stop GPS signal generation
+	kill_proc.php	... Kill process of hackrf_transfer, gps-sdr-sim and smooth.php for terminate signal generation.
+	smooth2.php	... Script for location interpolation between previos position and latest clicked position.
 ```    
 ## Installation
 # compile
