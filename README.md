@@ -19,6 +19,7 @@
 You need to install GPS-SDR-SIM,HackRF host tools, and WireringPi on RaspberryPi.<br>
 Rapsberry Pi3 is highly recomended for better performance of the real time signal generation.<br>
 It requires apache2 and php5 if you wish to use web based UI.<br>
+
 The installation instruction links are as follows.<br> 
 RaspberryPi:
 https://www.raspberrypi.org/<br>
@@ -29,6 +30,18 @@ https://github.com/mossmann/hackrf<br>
 WireringPi:
 http://wiringpi.com/download-and-install/
 <br><br>
+Additional info to control hackrf via HTTP server.<br>
+* You have to set udev rules.
+(1)Add  /etc/udev/rules.d/52-hackrf.rules as follows.
+	ATTR{idVendor}=="1d50", ATTR{idProduct}=="604b", SYMLINK+="hackrf-jawbreaker-%k", MODE="660", GROUP="plugdev"
+	ATTR{idVendor}=="1d50", ATTR{idProduct}=="6089", SYMLINK+="hackrf-one-%k", MODE="660", GROUP="plugdev"
+	ATTR{idVendor}=="1fc9", ATTR{idProduct}=="000c", SYMLINK+="hackrf-dfu-%k", MODE="660", GROUP="plugdev"
+(2) Refrect udev rules.
+	$sudo udevadm control --reload-rules
+(3) Add www-data user into plugdev.
+	$sudo usermod -aG plugdev www-data
+(4) Restart Apache2
+	
 ## directory structure of WALB software:<br>
 ```
 /home/pi/
@@ -46,7 +59,7 @@ http://wiringpi.com/download-and-install/
                 kill_proc.sh ... Script to kill gps-sdr-sim and/or hackrf_transfer
                 eth.sh       ... Script to display eth0 IP address on LCD
                 wlan.sh      ... Script to display wlan0 IP address on LCD
-	python/		　　 ... Python port file from replay2.c
+	/python/		　　 ... Python port file from replay2.c
 
 /var/www/html/webui/    ... Sctipt files to set GPS-SDR-SIM location via Web UI. 
 	LatLon.php	... Web UI
