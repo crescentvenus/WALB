@@ -5,12 +5,12 @@ $current_pos=$LatLon;
 //$pointed_location="/var/www/html/pokePos/LatLon.txt";
 echo $pointed_location."\n";
 echo $current_pos."\n";
-$MAX_PTR=12000;                 //
+$MAX_PTR=30000;                 // Maximum number of interpolation points.
 $MAX_G=1*9.80665;               // 1 G
-$R_earth=6378.1*1000;   // radius of the earth:6378Km
+$R_earth=6378.1*1000;           // radius of the earth:6378Km
 $Vdeg=1.2*360/(2*3.141592*$R_earth);
-$dt=0.1;                // 1/10
-$SLEEP=100000;  // 100mS
+$dt=0.1;                        // 1/10 sec.
+$SLEEP=100000;                  // 100mS
 
 function update($msg,$current_pos){
 //      echo $msg."\n";
@@ -35,7 +35,7 @@ while (1){
         $dat=trim(fgets($fp_r));
         fclose($fp_r);
         $t=explode(",",$dat);   // Lat,Lon,ALt,Zoom,Max_speed
-        $max_v=$t[4];
+        $max_v=$t[4]*8 ;        // 
         $max_deg_tic=$dt*$Vdeg*$max_v*1000/3600;
         if($dat<>$prev) {               // New pointed Lat/Lon...speed
                 echo "$dat,$prev\n";
