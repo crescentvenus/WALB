@@ -41,7 +41,8 @@ Additional info to control hackrf via HTTP server.<br>
 	$sudo udevadm control --reload-rules
 (3) Add www-data user into plugdev.
 	$sudo usermod -aG plugdev www-data
-(4) Restart Apache2<br>
+(4) Restart Apache2
+	$sudo systemctl restart apache2
 ```
 
 ## directory structure of WALB software:<br>
