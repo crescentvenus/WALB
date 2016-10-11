@@ -45,7 +45,7 @@ while (1){
                 }
                 $s=explode(",",$dat);
                 $x=$s[0];$y=$s[1];$z=$s[2];
-                $max_v=trim($t[4]);
+                $max_v=8*trim($t[4]);
                 $max_deg_tic=$dt*$Vdeg*$max_v*1000/3600;
                 $offset = $max_deg_tic * 0.5;
 //              printf("$dat, MaxV:$max_v,Max_dev_tic:$max_deg_tic\n");
