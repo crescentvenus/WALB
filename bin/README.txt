@@ -5,7 +5,7 @@ Options: * denotes enhanced feature.
   -u <user_motion> User motion file (dynamic mode)
   -g <nmea_gga>    NMEA GGA stream (dynamic mode)
   -l <location>    Lat,Lon,Hgt (static mode) e.g. 30.286502,120.032669,100
-* -i <interactive motion> Interactive input from a file Lat,Lon,Hgt
+* -i <interactive motion> Interactive input from a file Lat,Lon,height
   -t <date,time>   Scenario start time YYYY/MM/DD,hh:mm:ss
 * -T <date,time>   Scenario start time YYYY/MM/DD,hh:mm:ss(No ristriction)
   -d <duration>    Duration [sec] (max: 3000)
