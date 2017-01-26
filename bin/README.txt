@@ -26,7 +26,9 @@ STEP 1) run script to start enhanced gps-sdr-sim
     FIFO=/tmp/fifo
     INT_FILE=/tmp/latlon.txt
     DATE=2016/08/23,00:18:22
+    if [ ! -e $FIFO ]; then
     mkfifo $FIFO
+    fi
     ./gps-sdr-sim -s $SAMPLE -e $BRDC -i $INT_FILE -b8 -n $N_SAT -o $FIFO -T $DATE&
     hackrf_transfer -t $FIFO -f $FREQ -s $SAMPLE  -x $POWER >/dev/nul
 
@@ -34,5 +36,5 @@ STEP 2) Update the content of file INT_FILE every 1/10 second as necessary.
 
 Notes:
     I have reduced the sample rate a bit from default(2600000) due to performance limitation of the raspberry Pi.
-    You need additional user interface scripts to update INT_FILE as necessary.
+    You need additional user interface scripts to update INT_FILE as necessary. ( such as under "webui" directory )
     Use Google maps API for example.
