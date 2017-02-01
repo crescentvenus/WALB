@@ -19,7 +19,7 @@ Usage example for interactive mode:
  -----------------------------------
 STEP 1) run script to start enhanced gps-sdr-sim 
     #!/bin/sh
-    SAMPE=2048000
+    SAMPLE=2048000
     POWER=0
     BRDC=brdc3640.15n
     N_SAT=16
