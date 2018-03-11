@@ -1,7 +1,7 @@
 --------------------------------------------------------------
-gps-sdr-sim_x64  based on https://github.com/osqzss/gps-sdr-sim
+gps-sdr-sim_x64 for Ubuntu16.04 based on https://github.com/osqzss/gps-sdr-sim
 --------------------------------------------------------------
-This binary file is compiled for x64 CPU.
+This binary file is compiled for x64 CPU on Ubuntu16.04.
 Added feature is interactive location (Lat,Lon,Alt) update mode.
 You can specify a file which contains one line Lat,Lon,Alt.
 Use external program to update the contents of the file.
