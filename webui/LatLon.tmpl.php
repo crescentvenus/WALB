@@ -60,6 +60,6 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="./LatLon.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXX&signed_in=true&callback=initMap"></script>
 </body>
 </html>
