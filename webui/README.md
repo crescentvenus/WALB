@@ -1,7 +1,6 @@
 * Copy webui/* to youre WWW server. (ie. /var/wwww/html/webui )
 * Change all of the file owner to match HTTP server's process owner. (ie. www-data:www-data)
-* In start2.php
-   Make sure following.<BR>
+* In start2.php make sure below.<BR>
       gps-sdr-sim is in $DIR.<BR>
       $BRDC file is in $DIR.<BR>
 
