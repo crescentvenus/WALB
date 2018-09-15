@@ -1,5 +1,5 @@
 * Copy webui/* to youre WWW server. (ie. /var/wwww/html/webui )
-* Add google API_KEY (LatLon.tmpl.php line #65)
+* Add google API_KEY (At line #63 in LatLon.tmpl.php)
 * Change all of the file owner to match HTTP server's process owner. (ie. www-data:www-data)
 * In start2.php make sure below.<BR>
       gps-sdr-sim is in $DIR.<BR>
