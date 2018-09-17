@@ -23,12 +23,12 @@
                     <label for="text">Max Speed: </label>
                     <select name="speed">
                         <?php $speed=$settings['speed']?>
-                        <option value="5"   <?php if($speed==5)   echo selected ?>>5Km</option>
-                        <option value="10"  <?php if($speed==10)  echo selected ?>>10Km</option>
-                        <option value="50"  <?php if($speed==50)  echo selected ?>>50Km</option>
-                        <option value="100" <?php if($speed==100) echo selected ?>>100Km</option>
-                        <option value="200" <?php if($speed==200) echo selected ?>>200Km</option>
-                        <option value="300" <?php if($speed==300) echo selected ?>>300Km</option>
+                        <option value="5"   <?php if($speed==5)   echo "selected" ?>>5Km</option>
+                        <option value="10"  <?php if($speed==10)  echo "selected" ?>>10Km</option>
+                        <option value="50"  <?php if($speed==50)  echo "selected" ?>>50Km</option>
+                        <option value="100" <?php if($speed==100) echo "selected" ?>>100Km</option>
+                        <option value="200" <?php if($speed==200) echo "selected" ?>>200Km</option>
+                        <option value="300" <?php if($speed==300) echo "selected" ?>>300Km</option>
                     </select>
 
                     <!--
